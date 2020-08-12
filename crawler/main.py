@@ -1,6 +1,6 @@
 import math
 import random
-#from puzzle import *
+import puzzle #Am I supposed to write .puzzle or not???
 
 class Attack:
     #Future idea: healing moves could also fit into this class. I'd just need to make it so enemies don't avoid using it on themselves then.
@@ -87,10 +87,11 @@ class Player(Character): #player is a subclass of Character
 
         #======determining attack multiplier
         #This will eventually depend upon answering a question or something
-        attack_multiplier = 1
+        #attack_multiplier = 1
+        attack_multiplier = puzzle.alg_puzzle()
 
         #======calculating attack damage
-        attack_damage = attack.base_damage * attack_multiplier
+        attack_damage = math.floor(attack.base_damage * attack_multiplier)
 
         #======carrying out attack
         self.carry_out_attack(target, attack, attack_damage)
