@@ -16,6 +16,22 @@ class Room:
     def __str__(self):
         return "room {}".format(self.id)
 
+    def connect_to(self, room2):
+        self.connection_set.add(room2.id)
+
+    def two_way_connect(self, room2):
+        self.connect_to(room2)
+        room2.connect_to(self)
+
+    def add_occupants(self, new_occupants):
+        for occupant in new_occupants:
+            self.occupant_set.add(occupant)
+
+    def print_room_info(self):
+        print("You are in room {}".format(self.id))
+        print("Occupants: {}".format(self.occupant_set))
+        print("Possible destinations: {}".format(self.connection_set))
+
 r1 = Room()
 r2 = Room()
 
