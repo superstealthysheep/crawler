@@ -1,13 +1,13 @@
 class Room:
     id_counter = 0
-    room_list = []
+    room_dict = {} #eventually make different dungeons w/ own room dict possible?
 
     def __init__(self):
         print("init room")
         self.id = Room.id_counter
         Room.id_counter += 1
 
-        Room.room_list.append(self)
+        Room.room_dict.update({self.id : self})
 
         self.color = "red"
         self.connection_list = list() #ooo I can make connections non-mutual to make one-way connections
@@ -23,25 +23,38 @@ print(r2.id)
 print(r1.color)"""
 
 
-#generates rooms
-for i in range(0, 6):
-    new_room = Room()
-    new_room.connection_list.append(new_room.id + 1)
-    #Room.room_list.append(new_room)
+def generate_default_rooms():
+    #generates rooms
+    final_room_connection_set = set()
 
+    for i in range(0, 6):
+        new_room = Room()
+        new_room.connection_set.add(new_room.id + 1)
+        final_room_connection_set.add(new_room.id)
+        new_room.add_occupants({fight.Enemy()})
+
+    new_room.connection_set = final_room_connection_set
+
+
+
+"""generate_default_rooms()
+active_room = Room.room_list[2]
+active_room.print_room_info()"""
 
 #naviagte rooms
-active_room = Room.room_list[2]
-for asdf in range(0, 10):
-    print("You are in room {}".format(active_room.id))
-    print("Possible destinations: {}".format(active_room.connection_list))
-    try:
-        response = int(input("Enter destination: "))
-    except ValueError:
-        print("that's not an integer \n")
-        continue
+def navigate_rooms():
+    global active_room #future: fix this being global
 
-    if response in active_room.connection_list:
-        active_room = Room.room_list[response]
+
+    while True:
+        try:
+            response = int(input("Enter destination: "))
+            break
+        except ValueError:
+            print("that's not an integer \n")
+            continue
+
+    if response in active_room.connection_set:
+        active_room = Room.room_dict[response]
     else:
         print("that isn't in the destination list \n")
