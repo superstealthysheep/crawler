@@ -10,7 +10,8 @@ class Room:
         Room.room_dict.update({self.id : self})
 
         self.color = "red"
-        self.connection_list = list() #ooo I can make connections non-mutual to make one-way connections
+        self.connection_set = set() #ooo I can make connections non-mutual to make one-way connections
+        self.occupant_set = set()
 
     def __str__(self):
         return "room {}".format(self.id)
